@@ -6,10 +6,8 @@ a. Temperature: *Need to show unit of temperature*
 b. Pressure: *calculate and add unit symbol*
 c. Humidity: *calculate and add unit symbol*
 d. Max temperature: *calculate and add unit symbol*
-
 e. Min temperature: *calculate and add unit symbol*
 f. A Map showing the location of the city (using long and lat) ✅
-
 3. You need to maintain a list with the last 5 searched cities (it should be persisted in local storage). Any item of the list can be deleted. ⛔️
 4. Every time a city from the above list is clicked, the forecast information should be shown
 as in step (2). ⛔️
