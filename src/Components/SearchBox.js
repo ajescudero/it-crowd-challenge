@@ -4,8 +4,6 @@ import TextField from "@material-ui/core/TextField";
 import IconButton from "@material-ui/core/IconButton";
 import SearchIcon from "@material-ui/icons/Search";
 import HomeIcon from "@material-ui/icons/Home";
-import ToggleButton from '@material-ui/lab/ToggleButton';
-import ToggleButtonGroup from '@material-ui/lab/ToggleButtonGroup';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -28,7 +26,6 @@ const SearchBox = ({ search, setSearch, setError }) => {
 
     setSearch({
       city: e.target.city.value,
-      unit: e.target.unit.value,
       request: true
     });
   };
@@ -36,7 +33,6 @@ const SearchBox = ({ search, setSearch, setError }) => {
   const handleReset = e => {
     setSearch({
       city: "",
-      unit: "celsius",
       request: false
     });
 
@@ -69,25 +65,6 @@ const SearchBox = ({ search, setSearch, setError }) => {
         }}
         required
       />
-      <ToggleButtonGroup
-        value={search.unit}
-        exclusive
-        onChange={ e => {
-          setSearch({
-            ...search,
-            unit: e.target.value,
-            request: false
-          })
-        }}
-        aria-label="text alignment"
-      >
-        <ToggleButton value="celsius" aria-label="celsius">
-        <b>C</b>
-        </ToggleButton>
-        <ToggleButton value="farenheit" aria-label="farenheit">
-          <b>F</b>
-        </ToggleButton>
-      </ToggleButtonGroup>
       <IconButton color="primary" type="submit">
         <SearchIcon />
       </IconButton>
