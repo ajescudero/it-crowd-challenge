@@ -15,14 +15,12 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import WeatherMap from "../Components/WeatherMap/WeatherMap";
+import Avatar from "@material-ui/core/Avatar";
 
 const useStyles = makeStyles({
   root: {
     maxWidth: 800,
     margin: "2rem auto"
-  },
-  lyrics: {
-    whiteSpace: "pre-wrap !important"
   },
   title: {
     marginBottom: "3rem !important"
@@ -60,14 +58,16 @@ const City = ({ cities }) => {
           component="h2"
           className={classes.title}
         >
-          {city.city}
+          {city.city}, {city.country}
         </Typography>
 
         <TableContainer component={Paper}>
+        <CardContent>
+        <Avatar alt={city.city} src={city.icon} />
+        </CardContent>
             <Table className={classes.table} aria-label="simple table">
                 <TableHead>
                 <TableRow>
-                    <TableCell></TableCell>
                     <TableCell align="right">Temperature</TableCell>
                     <TableCell align="right">Pressure</TableCell>
                     <TableCell align="right">Humidity</TableCell>
@@ -76,7 +76,6 @@ const City = ({ cities }) => {
                 </TableHead>
                 <TableBody>
                     <TableRow>
-                    <TableCell></TableCell>
                     <TableCell align="right">{city.temp} ºC</TableCell>
                     <TableCell align="right">{city.pressure} hPa</TableCell>
                     <TableCell align="right">{city.humidity} %</TableCell>

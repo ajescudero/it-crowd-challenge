@@ -27,7 +27,7 @@ function App() {
 
   //Effect function
   useEffect(() => {
-    localStorage.setItem(cities, JSON.stringify(cities));
+    localStorage.setItem("cities", JSON.stringify(cities));
 
     const getData = async () => {
       const uriEncodedCity = encodeURIComponent(search.city);
@@ -53,6 +53,7 @@ function App() {
           temp_max: cityJSON.main.temp_max,
           lon: cityJSON.coord.lon,
           lat: cityJSON.coord.lat,
+          country: cityJSON.sys.country,
           icon: `http://openweathermap.org/img/wn/${cityJSON.weather[0].icon}@2x.png`
         });
       } catch (error) {

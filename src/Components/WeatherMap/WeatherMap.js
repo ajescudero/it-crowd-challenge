@@ -1,11 +1,19 @@
 import React from 'react';
 import { useGoogleMaps } from "react-hook-google-maps";
+import { makeStyles } from '@material-ui/core';
 
+const useStyles = makeStyles({
+    mapContainer: {
+        width: 'auto',
+        height: 300
+    }
+});
 
 const WeatherMap = (city) => {
+    const classes = useStyles();
     const { ref } = useGoogleMaps(
         // Use your own API key, you can get one from Google (https://console.cloud.google.com/google/maps-apis/overview)
-        "AIzaSyCuLSgnH7OyXxO9ovBysLPuisG3W5o3Z5g",
+        process.env.GOOGLE_MAPS_API_KEY,
         // NOTE: even if you change options later
         {
         center: { lat: city.city.lat, lng: city.city.lon },
@@ -13,7 +21,7 @@ const WeatherMap = (city) => {
         }
     )
 
-    return <div ref={ref} style={{ width: 750, height: 300 }} />;
+    return <div ref={ref} className={ classes.mapContainer } />;
 }
      
 export default WeatherMap;
