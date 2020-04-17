@@ -45,8 +45,8 @@ const SearchResult = ({
   const classes = useStyles();
 
   const handleClick = e => {
-    console.log(cities, currentCity);
-    setCities(cities => [...cities, currentCity]);
+    var newResults = cities.concat(currentCity).slice(-5);
+    setCities(newResults);
     setSearch({
       city: "",
       request: false
