@@ -13,7 +13,7 @@ const WeatherMap = (city) => {
     const classes = useStyles();
     const { ref } = useGoogleMaps(
         // Use your own API key, you can get one from Google (https://console.cloud.google.com/google/maps-apis/overview)
-        process.env.GOOGLE_MAPS_API_KEY,
+        process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
         // NOTE: even if you change options later
         {
         center: { lat: city.city.lat, lng: city.city.lon },
