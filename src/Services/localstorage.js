@@ -1,5 +1,5 @@
 export function get() {
-    return JSON.parse(localStorage.getItem("cities") || []);
+    return JSON.parse(localStorage.getItem("cities")) || [];
 }
 
 export function set(item) {
