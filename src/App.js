@@ -10,10 +10,11 @@ import SearchBox from "./Components/SearchBox";
 import Error404 from "./Components/Error404";
 import City from "./pages/City";
 import SearchResult from "./Components/SearchResult";
+import { get, set } from "./Services/localstorage";
 
 function App() {
   // State variables
-  let citiesInit = JSON.parse(localStorage.getItem("cities")) || [],
+  let citiesInit = get(),
     searchInit = {
       city: "",
       request: false
@@ -27,11 +28,10 @@ function App() {
 
   //Effect function
   useEffect(() => {
-    localStorage.setItem("cities", JSON.stringify(cities));
+    set(cities);
 
     const getData = async () => {
       const uriEncodedCity = encodeURIComponent(search.city);
-      console.log(uriEncodedCity);
 
       try {
         let weatherAPI = `https://community-open-weather-map.p.rapidapi.com/weather?units=metric&q=${uriEncodedCity}`,
@@ -43,7 +43,6 @@ function App() {
           }
         }),
         cityJSON = await weatherRes.json();
-        console.log(cityJSON);
         setCurrentCity({
           city: cityJSON.name,
           temp: cityJSON.main.temp,

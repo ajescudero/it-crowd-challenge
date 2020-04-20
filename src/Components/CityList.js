@@ -11,6 +11,7 @@ import IconButton from "@material-ui/core/IconButton";
 import LaunchIcon from "@material-ui/icons/Launch";
 import Alert from "@material-ui/lab/Alert";
 import AlertDialog from "./AlertDialog";
+import { set } from "../Services/localstorage";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -37,7 +38,7 @@ const CityList = ({ cities, setCities }) => {
   const deleteCity = id => {
     let citiesFilter = cities.filter((el, index) => index !== id);
     setCities(citiesFilter);
-    localStorage.setItem("cities", JSON.stringify(citiesFilter));
+    set(citiesFilter);
   };
   return (
     <div className={classes.root}>
