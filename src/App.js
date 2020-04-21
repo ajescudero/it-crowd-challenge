@@ -25,30 +25,39 @@ function App() {
   const [currentCity, setCurrentCity] = useState({});
   const [error, setError] = useState(false);
 
+  // useEffect(() => {
+  //   const getLocation = async () => {
+
+  //       try {
+  //         navigator.geolocation.getCurrentPosition( 
+  //           (position) => {
+  //               let mapAPI = 'https://maps.googleapis.com/maps/api/geocode/json?address=' + position.coords.latitude + ',' + position.coords.longitude + '&key=' + process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
+  //               mapAPIRes = await fetch(mapAPI);
+  //               locationJSON = await mapAPIRes.json();
+  //               .then((response) => response.json())
+  //               .then((responseJson) => {
+  //                 search.city = responseJson.results[0]
+  //                 .address_components.filter(x => x.types.filter(
+  //                     t => t === 'administrative_area_level_1').length > 0)[0].short_name
+  //                 });
+  //                 setSearch({
+  //                   city: search.city,
+  //                   request: false
+  //                 });
+  //             } catch (error) {
+  //             console.log(error);
+  //             setSearch({
+  //               city: search.city,
+  //               request: false
+  //             });
+  //           }
+  //         }
+  //       });
+  // });
 
   //Effect function
   useEffect(() => {
     set(cities);
-//     if (!cities.length) {
-//       navigator.geolocation.getCurrentPosition( 
-//         (position) => {
-//           try {
-//             fetch('https://maps.googleapis.com/maps/api/geocode/json?address=' + position.coords.latitude + ',' + position.coords.longitude + '&key=' + process.env.GOOGLE_MAPS_API_KEY)
-//             .then((response) => response.json())
-//             .then((responseJson) => {
-//               search.city = responseJson.results[0]
-// .address_components.filter(x => x.types.filter(
-//     t => t === 'administrative_area_level_1').length > 0)[0].short_name;
-// })
-//           } catch (error) {
-//           console.log(error);
-//           setSearch({
-//             city: search.city,
-//             request: false
-//           });
-//         }
-//     }
-//     )}
 
     const getData = async () => {
       const uriEncodedCity = encodeURIComponent(search.city);
