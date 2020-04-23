@@ -48,7 +48,7 @@ function App() {
       };
       getWeatherCurrentLocation();
     };
-  },[cities]);
+  },[]);
 
   //Effect function
   useEffect(() => {

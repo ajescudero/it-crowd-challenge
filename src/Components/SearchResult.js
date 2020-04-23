@@ -1,6 +1,5 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import { Link } from "react-router-dom";
 import Card from "@material-ui/core/Card";
 import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
@@ -8,7 +7,6 @@ import Button from "@material-ui/core/Button";
 import AddCircleIcon from "@material-ui/icons/AddCircle";
 import Typography from "@material-ui/core/Typography";
 import TableContainer from "@material-ui/core/TableContainer";
-import HomeIcon from "@material-ui/icons/Home";
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -32,6 +30,9 @@ const useStyles = makeStyles({
   },
   addBtn: {
     justifyContent: "flex-end"
+  },
+  goHome: {
+    justifyContent: "center"
   }
 });
 
@@ -45,8 +46,15 @@ const SearchResult = ({
   const classes = useStyles();
 
   const handleClick = e => {
-    var newResults = cities.concat(currentCity).slice(-5);
-    setCities(newResults);
+    let duplicateCity = cities.findIndex(city  => city.city === currentCity.city),
+      newResults;
+    
+    newResults = cities.concat(currentCity).slice(-5);
+
+    if (duplicateCity === -1) {
+      setCities(newResults);
+    }
+    
     setSearch({
       city: "",
       request: false
@@ -56,12 +64,6 @@ const SearchResult = ({
 
   return (
     <Card className={classes.root}>
-    <CardActions className={classes.goHome}>
-      <Button size="large" color="primary" component={Link} to="/">
-        <HomeIcon />
-        Home
-      </Button>
-      </CardActions>
       <CardContent>
           <WeatherMap city={currentCity} />
       </CardContent>
