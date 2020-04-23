@@ -15,7 +15,7 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import Avatar from "@material-ui/core/Avatar";
-import WeatherMap from '../Components/WeatherMap'
+import WeatherMap from '../Components/WeatherMap';
 
 const useStyles = makeStyles({
   root: {
@@ -34,7 +34,7 @@ const useStyles = makeStyles({
   }
 });
 
-const City = ({ cities }) => {
+function City ({ cities }) {
   const classes = useStyles();
 
   let { id } = useParams(),

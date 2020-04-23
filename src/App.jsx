@@ -11,7 +11,7 @@ import Error404 from "./Components/Error404";
 import City from "./pages/City";
 import SearchResult from "./Components/SearchResult";
 import { get, set } from "./Services/localstorage";
-import { getLocationByLatLng } from "./Services/weatherLocation"
+import { getLocationByLatLng } from "./Services/weatherLocation";
 
 function App() {
   // State variables
@@ -47,8 +47,8 @@ function App() {
         });
       };
       getWeatherCurrentLocation();
-    };
-  },[]);
+    }
+  });
 
   //Effect function
   useEffect(() => {
@@ -59,7 +59,7 @@ function App() {
       const uriEncodedCity = encodeURIComponent(search.city);
 
       try {
-        let weatherAPI = `https://community-open-weather-map.p.rapidapi.com/weather?units=metric&q=${uriEncodedCity}`,
+        let weatherAPI =  process.env.REACT_APP_WEATHER_API + uriEncodedCity,
         weatherRes = await fetch(weatherAPI, {
           "method": "GET",
           "headers": {
@@ -78,7 +78,7 @@ function App() {
           lon: cityJSON.coord.lon,
           lat: cityJSON.coord.lat,
           country: cityJSON.sys.country,
-          icon: `http://openweathermap.org/img/wn/${cityJSON.weather[0].icon}@2x.png`
+          icon: process.env.REACT_APP_ICON_URL + `${cityJSON.weather[0].icon}@2x.png`
         });
       } catch (error) {
         console.log(error);
@@ -117,7 +117,9 @@ function App() {
                       severity="error"
                       style={{ maxWidth: 752, margin: "2rem auto 0" }}
                     >
-                      <AlertTitle>Error</AlertTitle>
+                      <AlertTitle>
+                        Error
+                        </AlertTitle>
                       We found problems:
                       <ul>
                         <li>

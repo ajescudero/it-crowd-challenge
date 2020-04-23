@@ -36,13 +36,13 @@ const useStyles = makeStyles({
   }
 });
 
-const SearchResult = ({
+function SearchResult ({
   currentCity,
   setCurrentCity,
   cities,
   setCities,
   setSearch
-}) => {
+}) {
   const classes = useStyles();
 
   const handleClick = e => {

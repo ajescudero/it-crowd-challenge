@@ -10,7 +10,7 @@ import DeleteIcon from "@material-ui/icons/Delete";
 import DeleteForeverIcon from "@material-ui/icons/DeleteForever";
 import PanToolIcon from "@material-ui/icons/PanTool";
 
-const AlertDialog = ({ id, deleteCity }) => {
+function AlertDialog ({ id, deleteCity }) {
   const [open, setOpen] = useState(false);
 
   const handleOpen = () => {

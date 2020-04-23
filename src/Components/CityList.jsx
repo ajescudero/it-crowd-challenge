@@ -32,7 +32,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const CityList = ({ cities, setCities }) => {
+function CityList ({ cities, setCities }) {
   const classes = useStyles();
 
   const deleteCity = id => {
@@ -45,7 +45,7 @@ const CityList = ({ cities, setCities }) => {
       <div className={classes.demo}>
         {cities.length === 0 ? (
           <Alert severity="error" className={classes.alert}>
-            There aren't cities saved
+            There aren't cities available
           </Alert>
         ) : (
           <List>

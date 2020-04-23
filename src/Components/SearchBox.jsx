@@ -18,7 +18,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const SearchBox = ({ search, setSearch, setError }) => {
+function SearchBox ({ search, setSearch, setError }) {
   const classes = useStyles();
 
   const handleSubmit = e => {
