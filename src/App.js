@@ -11,9 +11,11 @@ import Error404 from "./Components/Error404";
 import City from "./pages/City";
 import SearchResult from "./Components/SearchResult";
 import { get, set } from "./Services/localstorage";
+import { getLocationByLatLng } from "./Services/weatherLocation"
 
 function App() {
   // State variables
+
   let citiesInit = get(),
     searchInit = {
       city: "",
@@ -25,38 +27,32 @@ function App() {
   const [currentCity, setCurrentCity] = useState({});
   const [error, setError] = useState(false);
 
-  // useEffect(() => {
-  //   const getLocation = async () => {
-
-  //       try {
-  //         navigator.geolocation.getCurrentPosition( 
-  //           (position) => {
-  //               let mapAPI = 'https://maps.googleapis.com/maps/api/geocode/json?address=' + position.coords.latitude + ',' + position.coords.longitude + '&key=' + process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
-  //               mapAPIRes = await fetch(mapAPI);
-  //               locationJSON = await mapAPIRes.json();
-  //               .then((response) => response.json())
-  //               .then((responseJson) => {
-  //                 search.city = responseJson.results[0]
-  //                 .address_components.filter(x => x.types.filter(
-  //                     t => t === 'administrative_area_level_1').length > 0)[0].short_name
-  //                 });
-  //                 setSearch({
-  //                   city: search.city,
-  //                   request: false
-  //                 });
-  //             } catch (error) {
-  //             console.log(error);
-  //             setSearch({
-  //               city: search.city,
-  //               request: false
-  //             });
-  //           }
-  //         }
-  //       });
-  // });
+  useEffect(() =>{
+    if(!cities.length) {
+      const getWeatherCurrentLocation = async () => {
+        let latitude, longitude;
+        navigator.geolocation.getCurrentPosition( async (location) => {
+          latitude = location.coords.latitude;
+          longitude = location.coords.longitude;
+          const { data } = await getLocationByLatLng(latitude, longitude);
+          const cityName = (
+            data.results[0].address_components.find(c =>
+              c.types.includes("administrative_area_level_1")
+            ) || {}
+          ).long_name;
+          setSearch({
+            city: cityName,
+            request: true
+          });    
+        });
+      };
+      getWeatherCurrentLocation();
+    };
+  },[cities]);
 
   //Effect function
   useEffect(() => {
+
     set(cities);
 
     const getData = async () => {

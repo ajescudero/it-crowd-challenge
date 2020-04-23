@@ -9,4 +9,3 @@ export function set(item) {
         localStorage.setItem('cities', item);
     }
 }
-
