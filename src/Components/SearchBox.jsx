@@ -5,7 +5,7 @@ import IconButton from "@material-ui/core/IconButton";
 import SearchIcon from "@material-ui/icons/Search";
 import HomeIcon from "@material-ui/icons/Home";
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   root: {
     display: "flex",
     justifyContent: "center",
@@ -13,27 +13,27 @@ const useStyles = makeStyles(theme => ({
 
     "& > *": {
       margin: theme.spacing(0),
-      width: "auto"
-    }
-  }
+      width: "auto",
+    },
+  },
 }));
 
-function SearchBox ({ search, setSearch, setError }) {
+function SearchBox({ search, setSearch, setError }) {
   const classes = useStyles();
 
-  const handleSubmit = e => {
+  const handleSubmit = (e) => {
     e.preventDefault();
 
     setSearch({
       city: e.target.city.value,
-      request: true
+      request: true,
     });
   };
 
-  const handleReset = e => {
+  const handleReset = (e) => {
     setSearch({
       city: "",
-      request: false
+      request: false,
     });
 
     setError(false);
@@ -56,11 +56,11 @@ function SearchBox ({ search, setSearch, setError }) {
         variant="outlined"
         size="small"
         value={search.city}
-        onChange={e => {
+        onChange={(e) => {
           setSearch({
             ...search,
             city: e.target.value,
-            request: false
+            request: false,
           });
         }}
         required
@@ -70,6 +70,6 @@ function SearchBox ({ search, setSearch, setError }) {
       </IconButton>
     </form>
   );
-};
+}
 
 export default SearchBox;

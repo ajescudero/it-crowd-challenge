@@ -7,57 +7,59 @@ import Button from "@material-ui/core/Button";
 import AddCircleIcon from "@material-ui/icons/AddCircle";
 import Typography from "@material-ui/core/Typography";
 import TableContainer from "@material-ui/core/TableContainer";
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
-import Paper from '@material-ui/core/Paper';
+import Table from "@material-ui/core/Table";
+import TableBody from "@material-ui/core/TableBody";
+import TableCell from "@material-ui/core/TableCell";
+import TableHead from "@material-ui/core/TableHead";
+import TableRow from "@material-ui/core/TableRow";
+import Paper from "@material-ui/core/Paper";
 import WeatherMap from "./WeatherMap";
 import Avatar from "@material-ui/core/Avatar";
 
 const useStyles = makeStyles({
   root: {
     maxWidth: 800,
-    margin: "2rem auto"
+    margin: "2rem auto",
   },
   title: {
-    marginBottom: "3rem !important"
+    marginBottom: "3rem !important",
   },
   media: {
     backgroundSize: "cover",
-    height: "50vh"
+    height: "50vh",
   },
   addBtn: {
-    justifyContent: "flex-end"
+    justifyContent: "flex-end",
   },
   goHome: {
-    justifyContent: "center"
-  }
+    justifyContent: "center",
+  },
 });
 
-function SearchResult ({
+function SearchResult({
   currentCity,
   setCurrentCity,
   cities,
   setCities,
-  setSearch
+  setSearch,
 }) {
   const classes = useStyles();
 
-  const handleClick = e => {
-    let duplicateCity = cities.findIndex(city  => city.city === currentCity.city),
+  const handleClick = (e) => {
+    let duplicateCity = cities.findIndex(
+        (city) => city.city === currentCity.city
+      ),
       newResults;
-    
+
     newResults = cities.concat(currentCity).slice(-5);
 
     if (duplicateCity === -1) {
       setCities(newResults);
     }
-    
+
     setSearch({
       city: "",
-      request: false
+      request: false,
     });
     setCurrentCity({});
   };
@@ -65,50 +67,52 @@ function SearchResult ({
   return (
     <Card className={classes.root}>
       <CardContent>
-          <WeatherMap city={currentCity} />
+        <WeatherMap city={currentCity} />
       </CardContent>
       <CardContent>
-      <Typography
-        gutterBottom
-        variant="h4"
-        component="h2"
-        className={classes.title}
-      >
-        {currentCity.city}, {currentCity.country}
-      </Typography>
+        <Typography
+          gutterBottom
+          variant="h4"
+          component="h2"
+          className={classes.title}
+        >
+          {currentCity.city}, {currentCity.country}
+        </Typography>
 
-      <TableContainer component={Paper}>
-      <CardContent>
-      <Avatar alt={currentCity.city} src={currentCity.icon} />
-      </CardContent>
+        <TableContainer component={Paper}>
+          <CardContent>
+            <Avatar alt={currentCity.city} src={currentCity.icon} />
+          </CardContent>
           <Table className={classes.table} aria-label="simple table">
-              <TableHead>
+            <TableHead>
               <TableRow>
-                  <TableCell align="right">Temperature</TableCell>
-                  <TableCell align="right">Pressure</TableCell>
-                  <TableCell align="right">Humidity</TableCell>
-                  <TableCell align="right">Min/Max</TableCell>
+                <TableCell align="right">Temperature</TableCell>
+                <TableCell align="right">Pressure</TableCell>
+                <TableCell align="right">Humidity</TableCell>
+                <TableCell align="right">Min/Max</TableCell>
               </TableRow>
-              </TableHead>
-              <TableBody>
-                  <TableRow>
-                  <TableCell align="right">{currentCity.temp} ºC</TableCell>
-                  <TableCell align="right">{currentCity.pressure} hPa</TableCell>
-                  <TableCell align="right">{currentCity.humidity} %</TableCell>
-                  <TableCell align="right">{currentCity.temp_min} ºC/{currentCity.temp_max} ºC</TableCell>
-                  </TableRow>
-              </TableBody>
+            </TableHead>
+            <TableBody>
+              <TableRow>
+                <TableCell align="right">{currentCity.temp} ºC</TableCell>
+                <TableCell align="right">{currentCity.pressure} hPa</TableCell>
+                <TableCell align="right">{currentCity.humidity} %</TableCell>
+                <TableCell align="right">
+                  {currentCity.temp_min} ºC/{currentCity.temp_max} ºC
+                </TableCell>
+              </TableRow>
+            </TableBody>
           </Table>
-      </TableContainer>
-      <CardActions className={classes.addBtn}>
-        <Button size="large" color="primary" onClick={handleClick}>
-          <AddCircleIcon />
-          Add
-        </Button>
-      </CardActions>
-    </CardContent>
-  </Card>
+        </TableContainer>
+        <CardActions className={classes.addBtn}>
+          <Button size="large" color="primary" onClick={handleClick}>
+            <AddCircleIcon />
+            Add
+          </Button>
+        </CardActions>
+      </CardContent>
+    </Card>
   );
-};
+}
 
 export default SearchResult;

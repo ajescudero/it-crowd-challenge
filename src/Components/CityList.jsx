@@ -13,29 +13,29 @@ import Alert from "@material-ui/lab/Alert";
 import AlertDialog from "./AlertDialog";
 import { set } from "../Services/localstorage";
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
     maxWidth: 752,
-    margin: "auto"
+    margin: "auto",
   },
   demo: {
-    backgroundColor: theme.palette.background.paper
+    backgroundColor: theme.palette.background.paper,
   },
   title: {
-    margin: theme.spacing(4, 0, 2)
+    margin: theme.spacing(4, 0, 2),
   },
   alert: {
     fontSize: "1.5rem",
     justifyContent: "center",
-    alignItems: "center"
-  }
+    alignItems: "center",
+  },
 }));
 
-function CityList ({ cities, setCities }) {
+function CityList({ cities, setCities }) {
   const classes = useStyles();
 
-  const deleteCity = id => {
+  const deleteCity = (id) => {
     let citiesFilter = cities.filter((el, index) => index !== id);
     setCities(citiesFilter);
     set(citiesFilter);
@@ -56,11 +56,7 @@ function CityList ({ cities, setCities }) {
                 </ListItemAvatar>
                 <ListItemText primary={el.city} />
                 <ListItemSecondaryAction>
-                  <IconButton
-                    edge="end"
-                    component={Link}
-                    to={`/city/${index}`}
-                  >
+                  <IconButton edge="end" component={Link} to={`/city/${index}`}>
                     <LaunchIcon />
                   </IconButton>
                   <AlertDialog id={index} deleteCity={deleteCity} />
@@ -72,6 +68,6 @@ function CityList ({ cities, setCities }) {
       </div>
     </div>
   );
-};
+}
 
 export default CityList;

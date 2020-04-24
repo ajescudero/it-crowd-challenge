@@ -1,5 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { BrowserRouter as Router, Route, Switch, HashRouter } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Route,
+  Switch,
+  HashRouter,
+} from "react-router-dom";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import "./App.css";
 import Header from "./Components/Header";
@@ -19,31 +24,31 @@ function App() {
   let citiesInit = get(),
     searchInit = {
       city: "",
-      request: false
+      request: false,
     };
-  
+
   const [cities, setCities] = useState(citiesInit);
   const [search, setSearch] = useState(searchInit);
   const [currentCity, setCurrentCity] = useState({});
   const [error, setError] = useState(false);
 
-  useEffect(() =>{
-    if(!cities.length) {
+  useEffect(() => {
+    if (!cities.length) {
       const getWeatherCurrentLocation = async () => {
         let latitude, longitude;
-        navigator.geolocation.getCurrentPosition( async (location) => {
+        navigator.geolocation.getCurrentPosition(async (location) => {
           latitude = location.coords.latitude;
           longitude = location.coords.longitude;
           const { data } = await getLocationByLatLng(latitude, longitude);
           const cityName = (
-            data.results[0].address_components.find(c =>
+            data.results[0].address_components.find((c) =>
               c.types.includes("administrative_area_level_1")
             ) || {}
           ).long_name;
           setSearch({
             city: cityName,
-            request: true
-          });    
+            request: true,
+          });
         });
       };
       getWeatherCurrentLocation();
@@ -52,22 +57,21 @@ function App() {
 
   //Effect function
   useEffect(() => {
-
     set(cities);
 
     const getData = async () => {
       const uriEncodedCity = encodeURIComponent(search.city);
 
       try {
-        let weatherAPI =  process.env.REACT_APP_WEATHER_API + uriEncodedCity,
-        weatherRes = await fetch(weatherAPI, {
-          "method": "GET",
-          "headers": {
+        let weatherAPI = process.env.REACT_APP_WEATHER_API + uriEncodedCity,
+          weatherRes = await fetch(weatherAPI, {
+            method: "GET",
+            headers: {
               "x-rapidapi-host": "community-open-weather-map.p.rapidapi.com",
-              "x-rapidapi-key": process.env.REACT_APP_API_KEY
-          }
-        }),
-        cityJSON = await weatherRes.json();
+              "x-rapidapi-key": process.env.REACT_APP_API_KEY,
+            },
+          }),
+          cityJSON = await weatherRes.json();
         setCurrentCity({
           city: cityJSON.name,
           temp: cityJSON.main.temp,
@@ -78,19 +82,21 @@ function App() {
           lon: cityJSON.coord.lon,
           lat: cityJSON.coord.lat,
           country: cityJSON.sys.country,
-          icon: process.env.REACT_APP_ICON_URL + `${cityJSON.weather[0].icon}@2x.png`
+          icon:
+            process.env.REACT_APP_ICON_URL +
+            `${cityJSON.weather[0].icon}@2x.png`,
         });
       } catch (error) {
         console.log(error);
         setSearch({
           city: search.city,
-          request: false
+          request: false,
         });
-  
+
         setError(true);
       }
     };
-    if(!search.request) {
+    if (!search.request) {
       return;
     } else {
       getData();
@@ -99,63 +105,55 @@ function App() {
 
   return (
     <Router>
-    <HashRouter basename="/">
-      <CssBaseline>
-        <div className="App">
-          <Header />
-          <main className="App-main">
-            <Switch>
-              <Route exact path="/">
-                <SearchBox
-                  search={search}
-                  setSearch={setSearch}
-                  setError={setError}
-                />
-                {!search.request ? (
-                  error ? (
-                    <Alert
-                      severity="error"
-                      style={{ maxWidth: 752, margin: "2rem auto 0" }}
-                    >
-                      <AlertTitle>
-                        Error
-                        </AlertTitle>
-                      We found problems:
-                      <ul>
-                        <li>
-                          City: <b>{search.city}</b>
-                        </li>
-                      </ul>
-                    </Alert>
+      <HashRouter basename="/">
+        <CssBaseline>
+          <div className="App">
+            <Header />
+            <main className="App-main">
+              <Switch>
+                <Route exact path="/">
+                  <SearchBox
+                    search={search}
+                    setSearch={setSearch}
+                    setError={setError}
+                  />
+                  {!search.request ? (
+                    error ? (
+                      <Alert
+                        severity="error"
+                        style={{ maxWidth: 752, margin: "2rem auto 0" }}
+                      >
+                        <AlertTitle>Error</AlertTitle>
+                        We found problems:
+                        <ul>
+                          <li>
+                            City: <b>{search.city}</b>
+                          </li>
+                        </ul>
+                      </Alert>
+                    ) : (
+                      <CityList cities={cities} setCities={setCities} />
+                    )
+                  ) : Object.keys(currentCity).length === 0 ? (
+                    <Loader />
                   ) : (
-                    <CityList
+                    <SearchResult
+                      currentCity={currentCity}
+                      setCurrentCity={setCurrentCity}
                       cities={cities}
                       setCities={setCities}
-                    />                         
-                  )
-                ) : Object.keys(currentCity).length === 0 ? (
-                  <Loader />
-                ) : (
-                  <SearchResult 
-                    currentCity={currentCity}
-                    setCurrentCity={setCurrentCity}
-                    cities={cities}
-                    setCities={setCities}
-                    setSearch={setSearch} 
-                  />
-                )}
-              </Route>
-              <Route
-                path="/city/:id"
-                children={<City cities={cities} />}
-              />
-              <Route path="*" component={Error404} />
-            </Switch>
-          </main>
-        </div>
-      </CssBaseline>
-    </HashRouter>
-  </Router>
+                      setSearch={setSearch}
+                    />
+                  )}
+                </Route>
+                <Route path="/city/:id" children={<City cities={cities} />} />
+                <Route path="*" component={Error404} />
+              </Switch>
+            </main>
+          </div>
+        </CssBaseline>
+      </HashRouter>
+    </Router>
   );
 }
 
