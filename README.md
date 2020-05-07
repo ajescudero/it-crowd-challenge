@@ -1,4 +1,4 @@
-# IT Crowd Challeng
+# IT Crowd Challenge
 Your task is to simply build a forecast application. The requirements are the following:
 1. The user must be able to do a search by the city name. ✅
 2. Each time the user searches the forecast for a city the result should be shown indicating:
